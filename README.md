@@ -16,3 +16,5 @@ TO DO (maybe)
 1.Localization
 
 2.Formatters
+
+3.Website calculator
