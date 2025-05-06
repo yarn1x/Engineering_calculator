@@ -205,30 +205,30 @@ namespace equation_calculator
         private async void Btn_modes_Click(object sender, EventArgs e)
         {
 
-            Panel_modes.Visible = true;
-            if (Panel_modes.Location.X > 19)
-            {
-
-                while (!expectation && Panel_modes.Location.X > 19)
-                {
-                    expectation = true;
-                    int move = Panel_modes.Location.X / 8;
-                    await Task.Delay(1);
-                    Panel_modes.Location = new Point(Panel_modes.Location.X - move, 61);
-                    expectation = false;
-                }
-            }
-            else
-            {
-                while (!expectation && Panel_modes.Location.X < 305)
-                {
-                    expectation = true;
-                    int move = (316 - Panel_modes.Location.X) / 6;
-                    await Task.Delay(1);
-                    Panel_modes.Location = new Point(Panel_modes.Location.X + move, 61);
-                    expectation = false;
-                }
-            }
+            //Panel_modes.Visible = true;
+            //if (Panel_modes.Location.X > 19)
+            //{
+            //
+            //    while (!expectation && Panel_modes.Location.X > 19)
+            //    {
+            //        expectation = true;
+            //        int move = Panel_modes.Location.X / 8;
+            //        await Task.Delay(1);
+            //        Panel_modes.Location = new Point(Panel_modes.Location.X - move, 61);
+            //        expectation = false;
+            //    }
+            //}
+            //else
+            //{
+            //    while (!expectation && Panel_modes.Location.X < 305)
+            //    {
+            //        expectation = true;
+            //        int move = (316 - Panel_modes.Location.X) / 6;
+            //        await Task.Delay(1);
+            //        Panel_modes.Location = new Point(Panel_modes.Location.X + move, 61);
+            //        expectation = false;
+            //    }
+            //}
         }
         private void Btn_mode_Calculator_Click(object sender, EventArgs e)
         {

@@ -12,3 +12,16 @@ C:\Desktop\Prog\СИстемный прогер\equation_calculator\bin\Debug\DL
 C:\Desktop\Prog\СИстемный прогер\equation_calculator\bin\Debug\DLLs.pdb
 C:\Desktop\Prog\СИстемный прогер\equation_calculator\obj\Debug\equation.2854763B.Up2Date
 C:\Desktop\Prog\СИстемный прогер\equation_calculator\bin\Debug\Guna.UI2.dll
+C:\Desktop\Prog\СИстемный прогер\equation_calculator\GitHub_repos\Project\bin\Debug\equation_calculator.exe.config
+C:\Desktop\Prog\СИстемный прогер\equation_calculator\GitHub_repos\Project\bin\Debug\equation_calculator.exe
+C:\Desktop\Prog\СИстемный прогер\equation_calculator\GitHub_repos\Project\bin\Debug\equation_calculator.pdb
+C:\Desktop\Prog\СИстемный прогер\equation_calculator\GitHub_repos\Project\bin\Debug\Guna.UI2.dll
+C:\Desktop\Prog\СИстемный прогер\equation_calculator\GitHub_repos\Project\bin\Debug\DLLs.pdb
+C:\Desktop\Prog\СИстемный прогер\equation_calculator\GitHub_repos\Project\obj\Debug\equation_calculator.csproj.AssemblyReference.cache
+C:\Desktop\Prog\СИстемный прогер\equation_calculator\GitHub_repos\Project\obj\Debug\equation_calculator.F_MainWindow.resources
+C:\Desktop\Prog\СИстемный прогер\equation_calculator\GitHub_repos\Project\obj\Debug\equation_calculator.Properties.Resources.resources
+C:\Desktop\Prog\СИстемный прогер\equation_calculator\GitHub_repos\Project\obj\Debug\equation_calculator.csproj.GenerateResource.cache
+C:\Desktop\Prog\СИстемный прогер\equation_calculator\GitHub_repos\Project\obj\Debug\equation_calculator.csproj.CoreCompileInputs.cache
+C:\Desktop\Prog\СИстемный прогер\equation_calculator\GitHub_repos\Project\obj\Debug\equation.2854763B.Up2Date
+C:\Desktop\Prog\СИстемный прогер\equation_calculator\GitHub_repos\Project\obj\Debug\equation_calculator.exe
+C:\Desktop\Prog\СИстемный прогер\equation_calculator\GitHub_repos\Project\obj\Debug\equation_calculator.pdb
