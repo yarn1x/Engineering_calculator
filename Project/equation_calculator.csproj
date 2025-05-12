@@ -110,5 +110,8 @@
   <ItemGroup>
     <None Include="Resources\settings_ico_black.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\GitHub_logo.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

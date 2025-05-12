@@ -1,11 +1,11 @@
-﻿
-using Math2;
+﻿using Math2;
 
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml.Serialization;
 using static System.Math;
 
 
@@ -20,6 +20,7 @@ namespace equation_calculator
 		{
 			InitializeComponent();
             LoadTheme();
+            LoadLanguage();
 
             this.MaximumSize = new System.Drawing.Size(300, 492);
 			Panel_modes.Visible = false;
@@ -79,9 +80,6 @@ namespace equation_calculator
         private void Btn_ln_Click(object sender, EventArgs e) { Tb_mainfileld.Text += "ln"; }
         private void Btn_trigonometry_Click(object sender, EventArgs e)
         {
-            Btn_trigonometry.Text = Btn_trigonometry.Text == "Trigonometry⋁"
-                ? Btn_trigonometry.Text = "Trigonometry⋀" : "Trigonometry⋁";
-
             Panel_trigonometry.Location = Panel_trigonometry.Location == new Point(17, 243)
                 ? new Point(319, 243) : new Point(17, 243);
             if (Panel_trigonometry.Location == new Point(17, 243)) Panel_trigonometry.Visible = true;
@@ -132,7 +130,16 @@ namespace equation_calculator
         }
         private void Btn_SEmode_help_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Вычисление корней, подстановкой в текстовые поля коэффициентов\n(оставить пустым, если не требуется)\nВыражение, в которое подставляются коэффициенты имеет общий вид:\na*x^3  +  b*x^2  +  c*x  +  d*sin(x)  +  e*cos(x)  +  f*ln(x)  +  g\n\nAccuracy - Погрешность вычисления\nScan start - Минимальное значение вычисления корня\nScan finish - Максимальное значение\n\nstart и finish являются границами оси Х.");
+            if (Properties.Settings.Default.Language == "English")
+            {
+                MessageBox.Show("Calculating roots by substituting coefficients into text fields\n(leave blank if not required)\nThe expression in which the coefficients are substituted has the general form:\na*x^3 + b*x^2 + c*x + d*sin(x) + e*cos(x) + f*ln(x)+ g\n\nAccuracy - Calculation error rate\nScan start - Minimum value of root calculation\nScan finish - Maximum value\n\nstart and finish are the boundaries of the X-axis.\n\n\nTranslated using Yandex Translator");
+                return;
+            }
+            else if (Properties.Settings.Default.Language == "Русский")
+            {
+                MessageBox.Show("Вычисление корней, подстановкой в текстовые поля коэффициентов\n(оставить пустым, если не требуется)\nВыражение, в которое подставляются коэффициенты имеет общий вид:\na*x^3  +  b*x^2  +  c*x  +  d*sin(x)  +  e*cos(x)  +  f*ln(x)  +  g\n\nAccuracy - Погрешность вычисления\nScan start - Минимальное значение вычисления корня\nScan finish - Максимальное значение\n\nstart и finish являются границами оси Х.");
+                return;
+            }
         }
         private void Btn_SEmode_clear_Click(object sender, EventArgs e)
         {
@@ -201,7 +208,7 @@ namespace equation_calculator
 
 
 
-        #region Panel modes
+        #region Panel modes region
         private async void Btn_modes_Click(object sender, EventArgs e)
         {
 
@@ -232,9 +239,8 @@ namespace equation_calculator
         }
         private void Btn_mode_Calculator_Click(object sender, EventArgs e)
         {
-            lbl_modeDisplay.Text = Btn_mode_Calculator.Text;
             if (Panel_settings.Location.Y <= 59) Btn_settings_Click(Btn_settings, null);
-
+            lbl_modeDisplay.Text = Btn_mode_Calculator.Text;
             enable_hotkeys = true;
 
             Gb_MainButtons.Enabled = true;
@@ -248,9 +254,8 @@ namespace equation_calculator
         }
         private void Btn_mode_solvingEquations_Click(object sender, EventArgs e)
         {
-            lbl_modeDisplay.Text = Btn_mode_solvingEquations.Text;
             if (Panel_settings.Location.Y <= 59) Btn_settings_Click(Btn_settings, null);
-
+            lbl_modeDisplay.Text = Btn_mode_solvingEquations.Text;
             Panel_SE.Visible = true;
             Tb_SEmode_E.Text = "0,001";
             Tb_SEmode_left.Text = "-10";
@@ -295,48 +300,112 @@ namespace equation_calculator
         #endregion
 
 
-        
-        private void Tb_mainfield_GotFocus(object sender, EventArgs e)
-		{
-			enable_hotkeys = !enable_hotkeys;
-        }//if cursor on Tb_mainfield then disable hotkeys
 
-        //HOTKEYS
-        private void F_MainWindow_KeyDown(object sender, KeyEventArgs e)
-		{
-			if (enable_hotkeys && Ts_settings_hotkeys.Checked)
-			{
-				//Numbers
-				if (e.KeyValue == (char)Keys.D1) Btn_1_Click(Btn_1, null);
-				else if (e.KeyValue == (char)Keys.D2) Btn_2_Click(Btn_2, null);
-				else if (e.KeyValue == (char)Keys.D3) Btn_3_Click(Btn_3, null);
-				else if (e.KeyValue == (char)Keys.D4) Btn_4_Click(Btn_4, null);
-				else if (e.KeyValue == (char)Keys.D5) Btn_5_Click(Btn_5, null);
-				else if (e.KeyValue == (char)Keys.D6) Btn_6_Click(Btn_6, null);
-				else if (e.KeyValue == (char)Keys.D7) Btn_7_Click(Btn_7, null);
-				else if (e.KeyValue == (char)Keys.D8) Btn_8_Click(Btn_8, null);
-				else if (e.KeyValue == (char)Keys.D9) Btn_9_Click(Btn_9, null);
-				else if (e.KeyValue == (char)Keys.D0) Btn_0_Click(Btn_0, null);
+        #region Settings region
 
-				// Operators and Special Characters
-				else if (e.KeyValue == (char)Keys.Add || e.KeyValue == (char)Keys.Oemplus && e.Shift) Tb_mainfileld.Text += "+";
-				else if (e.KeyValue == (char)Keys.Subtract || e.KeyValue == (char)Keys.OemMinus && e.Shift) Tb_mainfileld.Text += "-";
-				else if (e.KeyValue == (int)Keys.Multiply || e.KeyValue == (int)Keys.OemPeriod && e.Shift) Btn_multi_Click(Btn_multi, null);
-				else if (e.KeyValue == (int)Keys.Divide || e.KeyValue == (int)Keys.Oem2) Btn_divide_Click(Btn_divide, null);
-				else if (e.KeyValue == (int)Keys.Decimal || e.KeyValue == (int)Keys.Oemcomma) Tb_mainfileld.Text += ",";
+        private void Btn_GitHubSource_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://github.com/yarn1x/Engineering_calculator");
+        }
 
-				//Other hotkeys
-				else if (e.KeyValue == (char)Keys.C) Tb_mainfileld.Clear();
-				else if (e.KeyValue == (char)Keys.Enter) Btn_calculate_Click(Btn_calculate, null);
-				else if (e.KeyValue == (int)Keys.Back)
-				{
-					if (Tb_mainfileld.Text.Length > 0)
-					{
-						Tb_mainfileld.Text = Tb_mainfileld.Text.Substring(0, Tb_mainfileld.Text.Length - 1);
-					}
-				}
-			}
-		}
+        private void Cb_settings_language_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (Cb_settings_language.Text == "English")
+            {
+                Set_Eng_language();
+                SaveLanguage("English");
+
+            }
+            else if (Cb_settings_language.Text == "Русский")
+            {
+                Set_Rus_language();
+                SaveLanguage("Русский");
+            }
+        }
+
+        private void Set_Eng_language()
+        {
+            this.Text = "Calculator";
+            lbl_modeDisplay.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            Btn_mode_Calculator.Text = "Calculator";
+            Btn_mode_Calculator.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            Btn_mode_solvingEquations.Text = "Solving equations";
+            Btn_mode_solvingEquations.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            Btn_settings.Text = "Settings";
+            Btn_settings.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            lbl_Hotkeys.Text = "Hotkeys";
+            lbl_DarkMode.Text = "Dark mode";
+            lbl_Info.Text = "Info";
+            lbl_Info2.Text = "Version: 0.0.2 alpha\n05.12.2025";
+            Btn_GitHubSource.Text = "Source code";
+            Btn_GitHubSource.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            Btn_trigonometry.Text = "Trigonometry";
+            Btn_trigonometry.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            lbl_SEmode_freenum.Text = "free num";
+            lbl_SEmode_freenum.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            lbl_SEmode_Accuracy.Text = "Accuracy";
+            lbl_SEmode_Accuracy.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            lbl_SEmode_Scanstart.Text = "Scan start";
+            lbl_SEmode_Scanfinish.Text = "Scan finish";
+            Btn_SEmode_clear.Text = "Clean";
+            Btn_SEmode_help.Text = "Help";
+            Btn_SEmode_solve.Text = "Solve";
+        }
+
+        private void Set_Rus_language()
+        {
+            this.Text = "Калькулятор";
+            lbl_modeDisplay.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            Btn_mode_Calculator.Text = "Калькулятор";
+            Btn_mode_Calculator.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            Btn_mode_solvingEquations.Text = "Вычисление корня";
+            Btn_mode_solvingEquations.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            Btn_settings.Text = "Настройки";
+            Btn_settings.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            lbl_Hotkeys.Text = "Горячие клавиши";
+            lbl_DarkMode.Text = "Темная тема";
+            lbl_Info.Text = "Информация";
+            lbl_Info2.Text = "Версия: 0.0.2 alpha\n05.12.2025";
+            Btn_GitHubSource.Text = "Исходный код";
+            Btn_GitHubSource.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            Btn_trigonometry.Text = "Тригонометрия";
+            Btn_trigonometry.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            lbl_SEmode_freenum.Text = "свободное";
+            lbl_SEmode_freenum.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            lbl_SEmode_Accuracy.Text = "Точность";
+            lbl_SEmode_Accuracy.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            lbl_SEmode_Scanstart.Text = "Старт";
+            lbl_SEmode_Scanfinish.Text = "Финиш";
+            Btn_SEmode_clear.Text = "Отчистить";
+            Btn_SEmode_help.Text = "Помощь";
+            Btn_SEmode_solve.Text = "Решить";
+
+            Cb_settings_language.Text = "Русский";
+        }
+
+        private void LoadLanguage()
+        {
+            string language = Properties.Settings.Default.Language;
+
+            if (language == "English")
+            {
+                lbl_modeDisplay.Text = "Calculator";
+                Set_Eng_language();
+            }
+            else if (language == "Русский")
+            {
+                lbl_modeDisplay.Text = "Калькулятор";
+                Set_Rus_language();
+            }
+        }
+
+        private void SaveLanguage(string lang)
+        {
+            Properties.Settings.Default.Language = lang;
+            Properties.Settings.Default.Save();
+        }
+
+        #endregion
 
 
 
@@ -377,56 +446,59 @@ namespace equation_calculator
         }
         private void Enable_Light_theme()
         {
-            this.BackColor = SystemColors.Control;
-            this.Tb_mainfileld.BackColor = SystemColors.ScrollBar;
-            this.Tb_response_output.BackColor = SystemColors.Control;
+            this.BackColor = Color.FromArgb(252, 252, 252); ;
+            this.Tb_mainfileld.BackColor = Color.FromArgb(200, 200, 200);
+            this.Tb_response_output.BackColor = Color.FromArgb(252, 252, 252); ;
             //Calculator back
-            this.Btn_0.BackColor = SystemColors.ScrollBar;
-            this.Btn_1.BackColor = SystemColors.ScrollBar;
-            this.Btn_2.BackColor = SystemColors.ScrollBar;
-            this.Btn_3.BackColor = SystemColors.ScrollBar;
-            this.Btn_4.BackColor = SystemColors.ScrollBar;
-            this.Btn_5.BackColor = SystemColors.ScrollBar;
-            this.Btn_6.BackColor = SystemColors.ScrollBar;
-            this.Btn_7.BackColor = SystemColors.ScrollBar;
-            this.Btn_8.BackColor = SystemColors.ScrollBar;
-            this.Btn_9.BackColor = SystemColors.ScrollBar;
-            this.Btn_sin.BackColor = SystemColors.ScrollBar;
-            this.Btn_cos.BackColor = SystemColors.ScrollBar;
-            this.Btn_tan.BackColor = SystemColors.ScrollBar;
-            this.Btn_ctg.BackColor = SystemColors.ScrollBar;
-            this.Btn_PI.BackColor = SystemColors.ScrollBar;
-            this.Btn_e.BackColor = SystemColors.ScrollBar;
-            this.Btn_sqrt.BackColor = SystemColors.ScrollBar;
-            this.Btn_ln.BackColor = SystemColors.ScrollBar;
-            this.Btn_log.BackColor = SystemColors.ScrollBar;
-            this.Btn_clear.BackColor = SystemColors.ScrollBar;
-            this.Btn_add.BackColor = SystemColors.ScrollBar;
-            this.Btn_sub.BackColor = SystemColors.ScrollBar;
-            this.Btn_multi.BackColor = SystemColors.ScrollBar;
-            this.Btn_divide.BackColor = SystemColors.ScrollBar;
-            this.Btn_comma.BackColor = SystemColors.ScrollBar;
-            this.Btn_openingParenthesis.BackColor = SystemColors.ScrollBar;
-            this.Btn_closingParenthesis.BackColor = SystemColors.ScrollBar;
-            this.Btn_factorial.BackColor = SystemColors.ScrollBar;
-            this.Btn_power.BackColor = SystemColors.ScrollBar;
-            this.Btn_mod.BackColor = SystemColors.ScrollBar;
-            this.Btn_trigonometry.BackColor = SystemColors.ScrollBar;
+            this.Btn_0.BackColor = Color.FromArgb(200, 200, 200);
+            this.Btn_1.BackColor = Color.FromArgb(200, 200, 200);
+            this.Btn_2.BackColor = Color.FromArgb(200, 200, 200);
+            this.Btn_3.BackColor = Color.FromArgb(200, 200, 200);
+            this.Btn_4.BackColor = Color.FromArgb(200, 200, 200);
+            this.Btn_5.BackColor = Color.FromArgb(200, 200, 200);
+            this.Btn_6.BackColor = Color.FromArgb(200, 200, 200);
+            this.Btn_7.BackColor = Color.FromArgb(200, 200, 200);
+            this.Btn_8.BackColor = Color.FromArgb(200, 200, 200);
+            this.Btn_9.BackColor = Color.FromArgb(200, 200, 200);
+            this.Btn_sin.BackColor = Color.FromArgb(200, 200, 200);
+            this.Btn_cos.BackColor = Color.FromArgb(200, 200, 200);
+            this.Btn_tan.BackColor = Color.FromArgb(200, 200, 200);
+            this.Btn_ctg.BackColor = Color.FromArgb(200, 200, 200);
+            this.Btn_PI.BackColor = Color.FromArgb(200, 200, 200);
+            this.Btn_e.BackColor = Color.FromArgb(200, 200, 200);
+            this.Btn_sqrt.BackColor = Color.FromArgb(200, 200, 200);
+            this.Btn_ln.BackColor = Color.FromArgb(200, 200, 200);
+            this.Btn_log.BackColor = Color.FromArgb(200, 200, 200);
+            this.Btn_clear.BackColor = Color.FromArgb(200, 200, 200);
+            this.Btn_add.BackColor = Color.FromArgb(200, 200, 200);
+            this.Btn_sub.BackColor = Color.FromArgb(200, 200, 200);
+            this.Btn_multi.BackColor = Color.FromArgb(200, 200, 200);
+            this.Btn_divide.BackColor = Color.FromArgb(200, 200, 200);
+            this.Btn_comma.BackColor = Color.FromArgb(200, 200, 200);
+            this.Btn_openingParenthesis.BackColor = Color.FromArgb(200, 200, 200);
+            this.Btn_closingParenthesis.BackColor = Color.FromArgb(200, 200, 200);
+            this.Btn_factorial.BackColor = Color.FromArgb(200, 200, 200);
+            this.Btn_power.BackColor = Color.FromArgb(200, 200, 200);
+            this.Btn_mod.BackColor = Color.FromArgb(200, 200, 200);
+            this.Btn_trigonometry.BackColor = Color.FromArgb(200, 200, 200);
             //Solving equations back
-            this.Btn_SEmode_clear.BackColor = SystemColors.ScrollBar;
-            this.Btn_SEmode_help.BackColor = SystemColors.ScrollBar;
-            this.Tb_SEmode_x3.BackColor = SystemColors.ScrollBar;
-            this.Tb_SEmode_x2.BackColor = SystemColors.ScrollBar;
-            this.Tb_SEmode_x.BackColor = SystemColors.ScrollBar;
-            this.Tb_SEmode_sin.BackColor = SystemColors.ScrollBar;
-            this.Tb_SEmode_cos.BackColor = SystemColors.ScrollBar;
-            this.Tb_SEmode_ln.BackColor = SystemColors.ScrollBar;
-            this.Tb_SEmode_free.BackColor = SystemColors.ScrollBar;
-            this.Tb_SEmode_E.BackColor = SystemColors.ScrollBar;
-            this.Tb_SEmode_left.BackColor = SystemColors.ScrollBar;
-            this.Tb_SEmode_right.BackColor = SystemColors.ScrollBar;
+            this.Btn_SEmode_clear.BackColor = Color.FromArgb(200, 200, 200);
+            this.Btn_SEmode_help.BackColor = Color.FromArgb(200, 200, 200);
+            this.Tb_SEmode_x3.BackColor = Color.FromArgb(200, 200, 200);
+            this.Tb_SEmode_x2.BackColor = Color.FromArgb(200, 200, 200);
+            this.Tb_SEmode_x.BackColor = Color.FromArgb(200, 200, 200);
+            this.Tb_SEmode_sin.BackColor = Color.FromArgb(200, 200, 200);
+            this.Tb_SEmode_cos.BackColor = Color.FromArgb(200, 200, 200);
+            this.Tb_SEmode_ln.BackColor = Color.FromArgb(200, 200, 200);
+            this.Tb_SEmode_free.BackColor = Color.FromArgb(200, 200, 200);
+            this.Tb_SEmode_E.BackColor = Color.FromArgb(200, 200, 200);
+            this.Tb_SEmode_left.BackColor = Color.FromArgb(200, 200, 200);
+            this.Tb_SEmode_right.BackColor = Color.FromArgb(200, 200, 200);
+            //Settings panel back
+            this.Btn_GitHubSource.BackColor = Color.FromArgb(252, 252, 252);
+            this.Cb_settings_language.FillColor = Color.FromArgb(200, 200, 200);
             //Mode panel back
-            this.Btn_modes.BackColor = SystemColors.Control;
+            this.Btn_modes.BackColor = Color.FromArgb(252, 252, 252); ;
             this.Panel_modes.BackColor = Color.FromArgb(222, 222, 222);
             this.Btn_mode_Calculator.BackColor = Color.FromArgb(222, 222, 222);
             this.Btn_mode_solvingEquations.BackColor = Color.FromArgb(222, 222, 222);
@@ -437,72 +509,75 @@ namespace equation_calculator
             //FORECOLOR
 
 
-            this.ForeColor = SystemColors.ControlText;
-            this.Tb_mainfileld.ForeColor = SystemColors.ControlText;
-            this.Tb_response_output.ForeColor = SystemColors.ControlText;
-            this.Btn_modes.ForeColor = SystemColors.ControlText;
+            this.ForeColor = Color.FromArgb(0, 0, 0);
+            this.Tb_mainfileld.ForeColor = Color.FromArgb(0, 0, 0);
+            this.Tb_response_output.ForeColor = Color.FromArgb(0, 0, 0);
+            this.Btn_modes.ForeColor = Color.FromArgb(0, 0, 0);
             //Calculator fore
-            this.Btn_0.ForeColor = SystemColors.ControlText;
-            this.Btn_1.ForeColor = SystemColors.ControlText;
-            this.Btn_2.ForeColor = SystemColors.ControlText;
-            this.Btn_3.ForeColor = SystemColors.ControlText;
-            this.Btn_4.ForeColor = SystemColors.ControlText;
-            this.Btn_5.ForeColor = SystemColors.ControlText;
-            this.Btn_6.ForeColor = SystemColors.ControlText;
-            this.Btn_7.ForeColor = SystemColors.ControlText;
-            this.Btn_8.ForeColor = SystemColors.ControlText;
-            this.Btn_9.ForeColor = SystemColors.ControlText;
-            this.Btn_sin.ForeColor = SystemColors.ControlText;
-            this.Btn_cos.ForeColor = SystemColors.ControlText;
-            this.Btn_tan.ForeColor = SystemColors.ControlText;
-            this.Btn_ctg.ForeColor = SystemColors.ControlText;
-            this.Btn_PI.ForeColor = SystemColors.ControlText;
-            this.Btn_e.ForeColor = SystemColors.ControlText;
-            this.Btn_sqrt.ForeColor = SystemColors.ControlText;
-            this.Btn_ln.ForeColor = SystemColors.ControlText;
-            this.Btn_log.ForeColor = SystemColors.ControlText;
-            this.Btn_clear.ForeColor = SystemColors.ControlText;
-            this.Btn_add.ForeColor = SystemColors.ControlText;
-            this.Btn_sub.ForeColor = SystemColors.ControlText;
-            this.Btn_multi.ForeColor = SystemColors.ControlText;
-            this.Btn_divide.ForeColor = SystemColors.ControlText;
-            this.Btn_comma.ForeColor = SystemColors.ControlText;
-            this.Btn_openingParenthesis.ForeColor = SystemColors.ControlText;
-            this.Btn_closingParenthesis.ForeColor = SystemColors.ControlText;
-            this.Btn_factorial.ForeColor = SystemColors.ControlText;
-            this.Btn_power.ForeColor = SystemColors.ControlText;
-            this.Btn_mod.ForeColor = SystemColors.ControlText;
-            this.Btn_trigonometry.ForeColor = SystemColors.ControlText;
+            this.Btn_0.ForeColor = Color.FromArgb(0, 0, 0);
+            this.Btn_1.ForeColor = Color.FromArgb(0, 0, 0);
+            this.Btn_2.ForeColor = Color.FromArgb(0, 0, 0);
+            this.Btn_3.ForeColor = Color.FromArgb(0, 0, 0);
+            this.Btn_4.ForeColor = Color.FromArgb(0, 0, 0);
+            this.Btn_5.ForeColor = Color.FromArgb(0, 0, 0);
+            this.Btn_6.ForeColor = Color.FromArgb(0, 0, 0);
+            this.Btn_7.ForeColor = Color.FromArgb(0, 0, 0);
+            this.Btn_8.ForeColor = Color.FromArgb(0, 0, 0);
+            this.Btn_9.ForeColor = Color.FromArgb(0, 0, 0);
+            this.Btn_sin.ForeColor = Color.FromArgb(0, 0, 0);
+            this.Btn_cos.ForeColor = Color.FromArgb(0, 0, 0);
+            this.Btn_tan.ForeColor = Color.FromArgb(0, 0, 0);
+            this.Btn_ctg.ForeColor = Color.FromArgb(0, 0, 0);
+            this.Btn_PI.ForeColor = Color.FromArgb(0, 0, 0);
+            this.Btn_e.ForeColor = Color.FromArgb(0, 0, 0);
+            this.Btn_sqrt.ForeColor = Color.FromArgb(0, 0, 0);
+            this.Btn_ln.ForeColor = Color.FromArgb(0, 0, 0);
+            this.Btn_log.ForeColor = Color.FromArgb(0, 0, 0);
+            this.Btn_clear.ForeColor = Color.FromArgb(0, 0, 0);
+            this.Btn_add.ForeColor = Color.FromArgb(0, 0, 0);
+            this.Btn_sub.ForeColor = Color.FromArgb(0, 0, 0);
+            this.Btn_multi.ForeColor = Color.FromArgb(0, 0, 0);
+            this.Btn_divide.ForeColor = Color.FromArgb(0, 0, 0);
+            this.Btn_comma.ForeColor = Color.FromArgb(0, 0, 0);
+            this.Btn_openingParenthesis.ForeColor = Color.FromArgb(0, 0, 0);
+            this.Btn_closingParenthesis.ForeColor = Color.FromArgb(0, 0, 0);
+            this.Btn_factorial.ForeColor = Color.FromArgb(0, 0, 0);
+            this.Btn_power.ForeColor = Color.FromArgb(0, 0, 0);
+            this.Btn_mod.ForeColor = Color.FromArgb(0, 0, 0);
+            this.Btn_trigonometry.ForeColor = Color.FromArgb(0, 0, 0);
             //Solving equations fore
-            this.Btn_SEmode_clear.ForeColor = SystemColors.ControlText;
-            this.Btn_SEmode_help.ForeColor = SystemColors.ControlText;
-            this.Tb_SEmode_x3.ForeColor = SystemColors.ControlText;
-            this.Tb_SEmode_x2.ForeColor = SystemColors.ControlText;
-            this.Tb_SEmode_x.ForeColor = SystemColors.ControlText;
-            this.Tb_SEmode_sin.ForeColor = SystemColors.ControlText;
-            this.Tb_SEmode_cos.ForeColor = SystemColors.ControlText;
-            this.Tb_SEmode_ln.ForeColor = SystemColors.ControlText;
-            this.Tb_SEmode_free.ForeColor = SystemColors.ControlText;
-            this.Tb_SEmode_E.ForeColor = SystemColors.ControlText;
-            this.Tb_SEmode_left.ForeColor = SystemColors.ControlText;
-            this.Tb_SEmode_right.ForeColor = SystemColors.ControlText;
-            this.lbl_SEmode_row1.ForeColor = SystemColors.ControlText;
-            this.lbl_SEmode_row2.ForeColor = SystemColors.ControlText;
-            this.lbl_SEmode_Accuracy.ForeColor = SystemColors.ControlText;
-            this.lbl_SEmode_freenum.ForeColor = SystemColors.ControlText;
-            this.lbl_SEmode_Scanstart.ForeColor = SystemColors.ControlText;
-            this.lbl_SEmode_Scanfinish.ForeColor = SystemColors.ControlText;
+            this.Btn_SEmode_clear.ForeColor = Color.FromArgb(0, 0, 0);
+            this.Btn_SEmode_help.ForeColor = Color.FromArgb(0, 0, 0);
+            this.Tb_SEmode_x3.ForeColor = Color.FromArgb(0, 0, 0);
+            this.Tb_SEmode_x2.ForeColor = Color.FromArgb(0, 0, 0);
+            this.Tb_SEmode_x.ForeColor = Color.FromArgb(0, 0, 0);
+            this.Tb_SEmode_sin.ForeColor = Color.FromArgb(0, 0, 0);
+            this.Tb_SEmode_cos.ForeColor = Color.FromArgb(0, 0, 0);
+            this.Tb_SEmode_ln.ForeColor = Color.FromArgb(0, 0, 0);
+            this.Tb_SEmode_free.ForeColor = Color.FromArgb(0, 0, 0);
+            this.Tb_SEmode_E.ForeColor = Color.FromArgb(0, 0, 0);
+            this.Tb_SEmode_left.ForeColor = Color.FromArgb(0, 0, 0);
+            this.Tb_SEmode_right.ForeColor = Color.FromArgb(0, 0, 0);
+            this.lbl_SEmode_row1.ForeColor = Color.FromArgb(0, 0, 0);
+            this.lbl_SEmode_row2.ForeColor = Color.FromArgb(0, 0, 0);
+            this.lbl_SEmode_Accuracy.ForeColor = Color.FromArgb(0, 0, 0);
+            this.lbl_SEmode_freenum.ForeColor = Color.FromArgb(0, 0, 0);
+            this.lbl_SEmode_Scanstart.ForeColor = Color.FromArgb(0, 0, 0);
+            this.lbl_SEmode_Scanfinish.ForeColor = Color.FromArgb(0, 0, 0);
             //Settings panel fore
-            this.lbl_Info.ForeColor = SystemColors.ControlText;
-            this.lbl_Info2.ForeColor = SystemColors.ControlText;
-            this.lbl_Hotkeys.ForeColor = SystemColors.ControlText;
-            this.lbl_DarkMode.ForeColor = SystemColors.ControlText;
+            this.lbl_Info.ForeColor = Color.FromArgb(0, 0, 0);
+            this.lbl_Info2.ForeColor = Color.FromArgb(0, 0, 0);
+            this.lbl_Hotkeys.ForeColor = Color.FromArgb(0, 0, 0);
+            this.lbl_DarkMode.ForeColor = Color.FromArgb(0, 0, 0);
+            this.Btn_GitHubSource.ForeColor = Color.FromArgb(0, 0, 0);
+            this.Cb_settings_language.ForeColor = Color.FromArgb(0, 0, 0);
             //Mode panel fore
-            this.lbl_modeDisplay.ForeColor = SystemColors.ControlText;
-            this.Panel_modes.ForeColor = SystemColors.ControlText;
-            this.Btn_mode_Calculator.ForeColor = SystemColors.ControlText;
-            this.Btn_mode_solvingEquations.ForeColor = SystemColors.ControlText;
-            this.Btn_settings.ForeColor = SystemColors.ControlText;
+            this.lbl_modeDisplay.ForeColor = Color.FromArgb(0, 0, 0);
+            this.Panel_modes.ForeColor = Color.FromArgb(0, 0, 0);
+            this.Btn_mode_Calculator.ForeColor = Color.FromArgb(0, 0, 0);
+            this.Btn_mode_solvingEquations.ForeColor = Color.FromArgb(0, 0, 0);
+            this.Btn_settings.ForeColor = Color.FromArgb(0, 0, 0);
+            //change images
             this.Ib_calculator.Image = Properties.Resources.calculator_ico_black;
             this.Ib_SE.Image = Properties.Resources.SEmode_ico_black;
             this.Ib_settings.Image = Properties.Resources.settings_ico_black;
@@ -557,6 +632,9 @@ namespace equation_calculator
             this.Tb_SEmode_E.BackColor = Color.FromArgb(84, 84, 84);
             this.Tb_SEmode_left.BackColor = Color.FromArgb(84, 84, 84);
             this.Tb_SEmode_right.BackColor = Color.FromArgb(84, 84, 84);
+            //Settings panel back
+            this.Btn_GitHubSource.BackColor = Color.FromArgb(50, 50, 53);
+            this.Cb_settings_language.FillColor = Color.FromArgb(84, 84, 84);
             //Mode panel back
             this.Btn_modes.BackColor = Color.FromArgb(50, 50, 53);
             this.Panel_modes.BackColor = Color.FromArgb(60, 60, 63);
@@ -565,82 +643,129 @@ namespace equation_calculator
             this.Btn_settings.BackColor = Color.FromArgb(60, 60, 63);
 
 
-
             //FORECOLOR
 
 
-            this.ForeColor = SystemColors.ButtonFace;
-            this.Tb_mainfileld.ForeColor = SystemColors.ButtonFace;
-            this.Tb_response_output.ForeColor = SystemColors.ButtonFace;
-            this.Btn_modes.ForeColor = SystemColors.ButtonFace;
+            this.ForeColor = Color.FromArgb(240, 240, 240);
+            this.Tb_mainfileld.ForeColor = Color.FromArgb(240, 240, 240);
+            this.Tb_response_output.ForeColor = Color.FromArgb(240, 240, 240);
+            this.Btn_modes.ForeColor = Color.FromArgb(240, 240, 240);
             //Calculator fore
-            this.Btn_0.ForeColor = SystemColors.ButtonFace;
-            this.Btn_1.ForeColor = SystemColors.ButtonFace;
-            this.Btn_2.ForeColor = SystemColors.ButtonFace;
-            this.Btn_3.ForeColor = SystemColors.ButtonFace;
-            this.Btn_4.ForeColor = SystemColors.ButtonFace;
-            this.Btn_5.ForeColor = SystemColors.ButtonFace;
-            this.Btn_6.ForeColor = SystemColors.ButtonFace;
-            this.Btn_7.ForeColor = SystemColors.ButtonFace;
-            this.Btn_8.ForeColor = SystemColors.ButtonFace;
-            this.Btn_9.ForeColor = SystemColors.ButtonFace;
-            this.Btn_sin.ForeColor = SystemColors.ButtonFace;
-            this.Btn_cos.ForeColor = SystemColors.ButtonFace;
-            this.Btn_tan.ForeColor = SystemColors.ButtonFace;
-            this.Btn_ctg.ForeColor = SystemColors.ButtonFace;
-            this.Btn_PI.ForeColor = SystemColors.ButtonFace;
-            this.Btn_e.ForeColor = SystemColors.ButtonFace;
-            this.Btn_sqrt.ForeColor = SystemColors.ButtonFace;
-            this.Btn_ln.ForeColor = SystemColors.ButtonFace;
-            this.Btn_log.ForeColor = SystemColors.ButtonFace;
-            this.Btn_clear.ForeColor = SystemColors.ButtonFace;
-            this.Btn_add.ForeColor = SystemColors.ButtonFace;
-            this.Btn_sub.ForeColor = SystemColors.ButtonFace;
-            this.Btn_multi.ForeColor = SystemColors.ButtonFace;
-            this.Btn_divide.ForeColor = SystemColors.ButtonFace;
-            this.Btn_comma.ForeColor = SystemColors.ButtonFace;
-            this.Btn_openingParenthesis.ForeColor = SystemColors.ButtonFace;
-            this.Btn_closingParenthesis.ForeColor = SystemColors.ButtonFace;
-            this.Btn_factorial.ForeColor = SystemColors.ButtonFace;
-            this.Btn_power.ForeColor = SystemColors.ButtonFace;
-            this.Btn_mod.ForeColor = SystemColors.ButtonFace;
-            this.Btn_trigonometry.ForeColor = SystemColors.ButtonFace;
+            this.Btn_0.ForeColor = Color.FromArgb(240, 240, 240);
+            this.Btn_1.ForeColor = Color.FromArgb(240, 240, 240);
+            this.Btn_2.ForeColor = Color.FromArgb(240, 240, 240);
+            this.Btn_3.ForeColor = Color.FromArgb(240, 240, 240);
+            this.Btn_4.ForeColor = Color.FromArgb(240, 240, 240);
+            this.Btn_5.ForeColor = Color.FromArgb(240, 240, 240);
+            this.Btn_6.ForeColor = Color.FromArgb(240, 240, 240);
+            this.Btn_7.ForeColor = Color.FromArgb(240, 240, 240);
+            this.Btn_8.ForeColor = Color.FromArgb(240, 240, 240);
+            this.Btn_9.ForeColor = Color.FromArgb(240, 240, 240);
+            this.Btn_sin.ForeColor = Color.FromArgb(240, 240, 240);
+            this.Btn_cos.ForeColor = Color.FromArgb(240, 240, 240);
+            this.Btn_tan.ForeColor = Color.FromArgb(240, 240, 240);
+            this.Btn_ctg.ForeColor = Color.FromArgb(240, 240, 240);
+            this.Btn_PI.ForeColor = Color.FromArgb(240, 240, 240);
+            this.Btn_e.ForeColor = Color.FromArgb(240, 240, 240);
+            this.Btn_sqrt.ForeColor = Color.FromArgb(240, 240, 240);
+            this.Btn_ln.ForeColor = Color.FromArgb(240, 240, 240);
+            this.Btn_log.ForeColor = Color.FromArgb(240, 240, 240);
+            this.Btn_clear.ForeColor = Color.FromArgb(240, 240, 240);
+            this.Btn_add.ForeColor = Color.FromArgb(240, 240, 240);
+            this.Btn_sub.ForeColor = Color.FromArgb(240, 240, 240);
+            this.Btn_multi.ForeColor = Color.FromArgb(240, 240, 240);
+            this.Btn_divide.ForeColor = Color.FromArgb(240, 240, 240);
+            this.Btn_comma.ForeColor = Color.FromArgb(240, 240, 240);
+            this.Btn_openingParenthesis.ForeColor = Color.FromArgb(240, 240, 240);
+            this.Btn_closingParenthesis.ForeColor = Color.FromArgb(240, 240, 240);
+            this.Btn_factorial.ForeColor = Color.FromArgb(240, 240, 240);
+            this.Btn_power.ForeColor = Color.FromArgb(240, 240, 240);
+            this.Btn_mod.ForeColor = Color.FromArgb(240, 240, 240);
+            this.Btn_trigonometry.ForeColor = Color.FromArgb(240, 240, 240);
             //Solving equations fore
-            this.Btn_SEmode_clear.ForeColor = SystemColors.ButtonFace;
-            this.Btn_SEmode_help.ForeColor = SystemColors.ButtonFace;
-            this.Tb_SEmode_x3.ForeColor = SystemColors.ButtonFace;
-            this.Tb_SEmode_x2.ForeColor = SystemColors.ButtonFace;
-            this.Tb_SEmode_x.ForeColor = SystemColors.ButtonFace;
-            this.Tb_SEmode_sin.ForeColor = SystemColors.ButtonFace;
-            this.Tb_SEmode_cos.ForeColor = SystemColors.ButtonFace;
-            this.Tb_SEmode_ln.ForeColor = SystemColors.ButtonFace;
-            this.Tb_SEmode_free.ForeColor = SystemColors.ButtonFace;
-            this.Tb_SEmode_E.ForeColor = SystemColors.ButtonFace;
-            this.Tb_SEmode_left.ForeColor = SystemColors.ButtonFace;
-            this.Tb_SEmode_right.ForeColor = SystemColors.ButtonFace;
-            this.lbl_SEmode_row1.ForeColor = SystemColors.ButtonFace;
-            this.lbl_SEmode_row2.ForeColor = SystemColors.ButtonFace;
-            this.lbl_SEmode_Accuracy.ForeColor = SystemColors.ButtonFace;
-            this.lbl_SEmode_freenum.ForeColor = SystemColors.ButtonFace;
-            this.lbl_SEmode_Scanstart.ForeColor = SystemColors.ButtonFace;
-            this.lbl_SEmode_Scanfinish.ForeColor = SystemColors.ButtonFace;
+            this.Btn_SEmode_clear.ForeColor = Color.FromArgb(240, 240, 240);
+            this.Btn_SEmode_help.ForeColor = Color.FromArgb(240, 240, 240);
+            this.Tb_SEmode_x3.ForeColor = Color.FromArgb(240, 240, 240);
+            this.Tb_SEmode_x2.ForeColor = Color.FromArgb(240, 240, 240);
+            this.Tb_SEmode_x.ForeColor = Color.FromArgb(240, 240, 240);
+            this.Tb_SEmode_sin.ForeColor = Color.FromArgb(240, 240, 240);
+            this.Tb_SEmode_cos.ForeColor = Color.FromArgb(240, 240, 240);
+            this.Tb_SEmode_ln.ForeColor = Color.FromArgb(240, 240, 240);
+            this.Tb_SEmode_free.ForeColor = Color.FromArgb(240, 240, 240);
+            this.Tb_SEmode_E.ForeColor = Color.FromArgb(240, 240, 240);
+            this.Tb_SEmode_left.ForeColor = Color.FromArgb(240, 240, 240);
+            this.Tb_SEmode_right.ForeColor = Color.FromArgb(240, 240, 240);
+            this.lbl_SEmode_row1.ForeColor = Color.FromArgb(240, 240, 240);
+            this.lbl_SEmode_row2.ForeColor = Color.FromArgb(240, 240, 240);
+            this.lbl_SEmode_Accuracy.ForeColor = Color.FromArgb(240, 240, 240);
+            this.lbl_SEmode_freenum.ForeColor = Color.FromArgb(240, 240, 240);
+            this.lbl_SEmode_Scanstart.ForeColor = Color.FromArgb(240, 240, 240);
+            this.lbl_SEmode_Scanfinish.ForeColor = Color.FromArgb(240, 240, 240);
             //Settings panel fore
-            this.lbl_Info.ForeColor = SystemColors.ButtonFace;
-            this.lbl_Info2.ForeColor = SystemColors.ButtonFace;
-            this.lbl_Hotkeys.ForeColor = SystemColors.ButtonFace;
-            this.lbl_DarkMode.ForeColor = SystemColors.ButtonFace;
+            this.lbl_Info.ForeColor = Color.FromArgb(240, 240, 240);
+            this.lbl_Info2.ForeColor = Color.FromArgb(240, 240, 240);
+            this.lbl_Hotkeys.ForeColor = Color.FromArgb(240, 240, 240);
+            this.lbl_DarkMode.ForeColor = Color.FromArgb(240, 240, 240);
+            this.Btn_GitHubSource.ForeColor = Color.FromArgb(240, 240, 240);
+            this.Cb_settings_language.ForeColor = Color.FromArgb(240, 240, 240);
             //Mode panel fore
-            this.lbl_modeDisplay.ForeColor = SystemColors.ButtonFace;
-            this.Panel_modes.ForeColor = SystemColors.ButtonFace;
-            this.Btn_mode_Calculator.ForeColor = SystemColors.ButtonFace;
-            this.Btn_mode_solvingEquations.ForeColor = SystemColors.ButtonFace;
-            this.Btn_settings.ForeColor = SystemColors.ButtonFace;
+            this.lbl_modeDisplay.ForeColor = Color.FromArgb(240, 240, 240);
+            this.Panel_modes.ForeColor = Color.FromArgb(240, 240, 240);
+            this.Btn_mode_Calculator.ForeColor = Color.FromArgb(240, 240, 240);
+            this.Btn_mode_solvingEquations.ForeColor = Color.FromArgb(240, 240, 240);
+            this.Btn_settings.ForeColor = Color.FromArgb(240, 240, 240);
+            //change images
             this.Ib_calculator.Image = Properties.Resources.calculator_ico;
             this.Ib_SE.Image = Properties.Resources.SEmode_ico;
             this.Ib_settings.Image = Properties.Resources.settings_ico;
         }
 
         #endregion
+
+
+
+
+        private void Tb_mainfield_GotFocus(object sender, EventArgs e)
+        {
+            enable_hotkeys = !enable_hotkeys;
+        }//if cursor on Tb_mainfield then disable hotkeys
+
+        //HOTKEYS
+        private void F_MainWindow_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (enable_hotkeys && Ts_settings_hotkeys.Checked)
+            {
+                //Numbers
+                if (e.KeyValue == (char)Keys.D1) Btn_1_Click(Btn_1, null);
+                else if (e.KeyValue == (char)Keys.D2) Btn_2_Click(Btn_2, null);
+                else if (e.KeyValue == (char)Keys.D3) Btn_3_Click(Btn_3, null);
+                else if (e.KeyValue == (char)Keys.D4) Btn_4_Click(Btn_4, null);
+                else if (e.KeyValue == (char)Keys.D5) Btn_5_Click(Btn_5, null);
+                else if (e.KeyValue == (char)Keys.D6) Btn_6_Click(Btn_6, null);
+                else if (e.KeyValue == (char)Keys.D7) Btn_7_Click(Btn_7, null);
+                else if (e.KeyValue == (char)Keys.D8) Btn_8_Click(Btn_8, null);
+                else if (e.KeyValue == (char)Keys.D9) Btn_9_Click(Btn_9, null);
+                else if (e.KeyValue == (char)Keys.D0) Btn_0_Click(Btn_0, null);
+
+                // Operators and Special Characters
+                else if (e.KeyValue == (char)Keys.Add || e.KeyValue == (char)Keys.Oemplus && e.Shift) Tb_mainfileld.Text += "+";
+                else if (e.KeyValue == (char)Keys.Subtract || e.KeyValue == (char)Keys.OemMinus && e.Shift) Tb_mainfileld.Text += "-";
+                else if (e.KeyValue == (int)Keys.Multiply || e.KeyValue == (int)Keys.OemPeriod && e.Shift) Btn_multi_Click(Btn_multi, null);
+                else if (e.KeyValue == (int)Keys.Divide || e.KeyValue == (int)Keys.Oem2) Btn_divide_Click(Btn_divide, null);
+                else if (e.KeyValue == (int)Keys.Decimal || e.KeyValue == (int)Keys.Oemcomma) Tb_mainfileld.Text += ",";
+
+                //Other hotkeys
+                else if (e.KeyValue == (char)Keys.C) Tb_mainfileld.Clear();
+                else if (e.KeyValue == (char)Keys.Enter) Btn_calculate_Click(Btn_calculate, null);
+                else if (e.KeyValue == (int)Keys.Back)
+                {
+                    if (Tb_mainfileld.Text.Length > 0)
+                    {
+                        Tb_mainfileld.Text = Tb_mainfileld.Text.Substring(0, Tb_mainfileld.Text.Length - 1);
+                    }
+                }
+            }
+        }
 
     }
 }

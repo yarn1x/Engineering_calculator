@@ -8,5 +8,8 @@
     <Setting Name="HotkeySwitch" Type="System.String" Scope="User">
       <Value Profile="(Default)">On</Value>
     </Setting>
+    <Setting Name="Language" Type="System.String" Scope="User">
+      <Value Profile="(Default)">English</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

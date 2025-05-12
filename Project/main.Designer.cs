@@ -94,6 +94,8 @@
             this.Btn_SEmode_solve = new System.Windows.Forms.Button();
             this.Btn_SEmode_help = new System.Windows.Forms.Button();
             this.Panel_settings = new System.Windows.Forms.Panel();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.Btn_GitHubSource = new System.Windows.Forms.Button();
             this.Cb_settings_language = new Guna.UI2.WinForms.Guna2ComboBox();
             this.lbl_DarkMode = new System.Windows.Forms.Label();
             this.Ts_settings_darkmode = new Guna.UI2.WinForms.Guna2ToggleSwitch();
@@ -102,7 +104,6 @@
             this.lbl_Info2 = new System.Windows.Forms.Label();
             this.lbl_Info = new System.Windows.Forms.Label();
             this.lbl_modeDisplay = new System.Windows.Forms.Label();
-            this.linkLabel_github = new System.Windows.Forms.LinkLabel();
             this.Gb_MainButtons.SuspendLayout();
             this.Panel_trigonometry.SuspendLayout();
             this.Panel_modes.SuspendLayout();
@@ -111,6 +112,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.Ib_calculator)).BeginInit();
             this.Panel_SE.SuspendLayout();
             this.Panel_settings.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // Gb_MainButtons
@@ -543,13 +545,13 @@
             this.Btn_trigonometry.FlatAppearance.BorderColor = System.Drawing.Color.Gray;
             this.Btn_trigonometry.FlatAppearance.BorderSize = 0;
             this.Btn_trigonometry.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.Btn_trigonometry.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.Btn_trigonometry.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.Btn_trigonometry.ForeColor = System.Drawing.SystemColors.ButtonFace;
             this.Btn_trigonometry.Location = new System.Drawing.Point(6, 21);
             this.Btn_trigonometry.Name = "Btn_trigonometry";
             this.Btn_trigonometry.Size = new System.Drawing.Size(124, 37);
             this.Btn_trigonometry.TabIndex = 12;
-            this.Btn_trigonometry.Text = "Trigonometry⋁";
+            this.Btn_trigonometry.Text = "Trigonometry";
             this.Btn_trigonometry.UseVisualStyleBackColor = false;
             this.Btn_trigonometry.Click += new System.EventHandler(this.Btn_trigonometry_Click);
             // 
@@ -756,11 +758,12 @@
             this.Btn_settings.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.Btn_settings.ForeColor = System.Drawing.SystemColors.ButtonFace;
             this.Btn_settings.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.Btn_settings.Location = new System.Drawing.Point(11, 220);
+            this.Btn_settings.Location = new System.Drawing.Point(30, 220);
             this.Btn_settings.Name = "Btn_settings";
-            this.Btn_settings.Size = new System.Drawing.Size(160, 48);
+            this.Btn_settings.Size = new System.Drawing.Size(141, 48);
             this.Btn_settings.TabIndex = 20;
             this.Btn_settings.Text = "Settings";
+            this.Btn_settings.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.Btn_settings.UseVisualStyleBackColor = false;
             this.Btn_settings.Click += new System.EventHandler(this.Btn_settings_Click);
             // 
@@ -797,11 +800,12 @@
             this.Btn_mode_solvingEquations.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.Btn_mode_solvingEquations.ForeColor = System.Drawing.SystemColors.ButtonFace;
             this.Btn_mode_solvingEquations.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.Btn_mode_solvingEquations.Location = new System.Drawing.Point(11, 83);
+            this.Btn_mode_solvingEquations.Location = new System.Drawing.Point(30, 83);
             this.Btn_mode_solvingEquations.Name = "Btn_mode_solvingEquations";
-            this.Btn_mode_solvingEquations.Size = new System.Drawing.Size(160, 71);
+            this.Btn_mode_solvingEquations.Size = new System.Drawing.Size(141, 71);
             this.Btn_mode_solvingEquations.TabIndex = 17;
             this.Btn_mode_solvingEquations.Text = "Solving equations";
+            this.Btn_mode_solvingEquations.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.Btn_mode_solvingEquations.UseVisualStyleBackColor = false;
             this.Btn_mode_solvingEquations.Click += new System.EventHandler(this.Btn_mode_solvingEquations_Click);
             // 
@@ -814,11 +818,12 @@
             this.Btn_mode_Calculator.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.Btn_mode_Calculator.ForeColor = System.Drawing.SystemColors.ButtonFace;
             this.Btn_mode_Calculator.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.Btn_mode_Calculator.Location = new System.Drawing.Point(11, 18);
+            this.Btn_mode_Calculator.Location = new System.Drawing.Point(30, 18);
             this.Btn_mode_Calculator.Name = "Btn_mode_Calculator";
-            this.Btn_mode_Calculator.Size = new System.Drawing.Size(160, 48);
+            this.Btn_mode_Calculator.Size = new System.Drawing.Size(141, 48);
             this.Btn_mode_Calculator.TabIndex = 16;
             this.Btn_mode_Calculator.Text = "Calculator";
+            this.Btn_mode_Calculator.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.Btn_mode_Calculator.UseVisualStyleBackColor = false;
             this.Btn_mode_Calculator.Click += new System.EventHandler(this.Btn_mode_Calculator_Click);
             // 
@@ -1089,7 +1094,8 @@
             // 
             // Panel_settings
             // 
-            this.Panel_settings.Controls.Add(this.linkLabel_github);
+            this.Panel_settings.Controls.Add(this.pictureBox1);
+            this.Panel_settings.Controls.Add(this.Btn_GitHubSource);
             this.Panel_settings.Controls.Add(this.Cb_settings_language);
             this.Panel_settings.Controls.Add(this.lbl_DarkMode);
             this.Panel_settings.Controls.Add(this.Ts_settings_darkmode);
@@ -1102,9 +1108,38 @@
             this.Panel_settings.Size = new System.Drawing.Size(364, 477);
             this.Panel_settings.TabIndex = 29;
             // 
+            // pictureBox1
+            // 
+            this.pictureBox1.BackColor = System.Drawing.Color.Transparent;
+            this.pictureBox1.BackgroundImage = global::equation_calculator.Properties.Resources.GitHub_logo;
+            this.pictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.pictureBox1.Location = new System.Drawing.Point(158, 413);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(48, 48);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox1.TabIndex = 22;
+            this.pictureBox1.TabStop = false;
+            // 
+            // Btn_GitHubSource
+            // 
+            this.Btn_GitHubSource.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(50)))), ((int)(((byte)(50)))), ((int)(((byte)(53)))));
+            this.Btn_GitHubSource.FlatAppearance.BorderColor = System.Drawing.Color.Gray;
+            this.Btn_GitHubSource.FlatAppearance.BorderSize = 0;
+            this.Btn_GitHubSource.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.Btn_GitHubSource.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.Btn_GitHubSource.ForeColor = System.Drawing.SystemColors.ButtonFace;
+            this.Btn_GitHubSource.Location = new System.Drawing.Point(10, 413);
+            this.Btn_GitHubSource.Name = "Btn_GitHubSource";
+            this.Btn_GitHubSource.Size = new System.Drawing.Size(155, 46);
+            this.Btn_GitHubSource.TabIndex = 9;
+            this.Btn_GitHubSource.Text = "Source code";
+            this.Btn_GitHubSource.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.Btn_GitHubSource.UseVisualStyleBackColor = false;
+            this.Btn_GitHubSource.Click += new System.EventHandler(this.Btn_GitHubSource_Click);
+            // 
             // Cb_settings_language
             // 
-            this.Cb_settings_language.BackColor = System.Drawing.Color.Transparent;
+            this.Cb_settings_language.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(84)))), ((int)(((byte)(84)))), ((int)(((byte)(84)))));
             this.Cb_settings_language.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(84)))), ((int)(((byte)(84)))), ((int)(((byte)(84)))));
             this.Cb_settings_language.BorderThickness = 0;
             this.Cb_settings_language.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
@@ -1118,22 +1153,23 @@
             this.Cb_settings_language.Items.AddRange(new object[] {
             "English",
             "Русский"});
-            this.Cb_settings_language.Location = new System.Drawing.Point(6, 108);
+            this.Cb_settings_language.Location = new System.Drawing.Point(20, 109);
             this.Cb_settings_language.Name = "Cb_settings_language";
             this.Cb_settings_language.Size = new System.Drawing.Size(184, 36);
             this.Cb_settings_language.StartIndex = 0;
             this.Cb_settings_language.TabIndex = 52;
+            this.Cb_settings_language.SelectedIndexChanged += new System.EventHandler(this.Cb_settings_language_SelectedIndexChanged);
             // 
             // lbl_DarkMode
             // 
             this.lbl_DarkMode.AutoSize = true;
             this.lbl_DarkMode.Font = new System.Drawing.Font("Microsoft PhagsPa", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbl_DarkMode.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.lbl_DarkMode.Location = new System.Drawing.Point(71, 60);
+            this.lbl_DarkMode.Location = new System.Drawing.Point(77, 58);
             this.lbl_DarkMode.Name = "lbl_DarkMode";
-            this.lbl_DarkMode.Size = new System.Drawing.Size(120, 29);
+            this.lbl_DarkMode.Size = new System.Drawing.Size(125, 29);
             this.lbl_DarkMode.TabIndex = 51;
-            this.lbl_DarkMode.Text = "DarkMode";
+            this.lbl_DarkMode.Text = "Dark mode";
             // 
             // Ts_settings_darkmode
             // 
@@ -1144,7 +1180,7 @@
             this.Ts_settings_darkmode.CheckedState.FillColor = System.Drawing.SystemColors.Highlight;
             this.Ts_settings_darkmode.CheckedState.InnerBorderColor = System.Drawing.SystemColors.HighlightText;
             this.Ts_settings_darkmode.CheckedState.InnerColor = System.Drawing.SystemColors.HighlightText;
-            this.Ts_settings_darkmode.Location = new System.Drawing.Point(7, 66);
+            this.Ts_settings_darkmode.Location = new System.Drawing.Point(20, 64);
             this.Ts_settings_darkmode.Name = "Ts_settings_darkmode";
             this.Ts_settings_darkmode.Size = new System.Drawing.Size(51, 23);
             this.Ts_settings_darkmode.TabIndex = 50;
@@ -1159,7 +1195,7 @@
             this.lbl_Hotkeys.AutoSize = true;
             this.lbl_Hotkeys.Font = new System.Drawing.Font("Microsoft PhagsPa", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbl_Hotkeys.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.lbl_Hotkeys.Location = new System.Drawing.Point(71, 14);
+            this.lbl_Hotkeys.Location = new System.Drawing.Point(77, 14);
             this.lbl_Hotkeys.Name = "lbl_Hotkeys";
             this.lbl_Hotkeys.Size = new System.Drawing.Size(94, 29);
             this.lbl_Hotkeys.TabIndex = 49;
@@ -1174,7 +1210,7 @@
             this.Ts_settings_hotkeys.CheckedState.FillColor = System.Drawing.SystemColors.Highlight;
             this.Ts_settings_hotkeys.CheckedState.InnerBorderColor = System.Drawing.SystemColors.HighlightText;
             this.Ts_settings_hotkeys.CheckedState.InnerColor = System.Drawing.SystemColors.HighlightText;
-            this.Ts_settings_hotkeys.Location = new System.Drawing.Point(7, 20);
+            this.Ts_settings_hotkeys.Location = new System.Drawing.Point(20, 20);
             this.Ts_settings_hotkeys.Name = "Ts_settings_hotkeys";
             this.Ts_settings_hotkeys.Size = new System.Drawing.Size(51, 23);
             this.Ts_settings_hotkeys.TabIndex = 47;
@@ -1188,18 +1224,18 @@
             this.lbl_Info2.AutoSize = true;
             this.lbl_Info2.Font = new System.Drawing.Font("Microsoft PhagsPa", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbl_Info2.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.lbl_Info2.Location = new System.Drawing.Point(5, 355);
+            this.lbl_Info2.Location = new System.Drawing.Point(15, 336);
             this.lbl_Info2.Name = "lbl_Info2";
-            this.lbl_Info2.Size = new System.Drawing.Size(209, 87);
+            this.lbl_Info2.Size = new System.Drawing.Size(198, 58);
             this.lbl_Info2.TabIndex = 46;
-            this.lbl_Info2.Text = "Version: 0.0.1 alpha\r\n2025.04.23\r\nGitHub repos: \r\n";
+            this.lbl_Info2.Text = "Version: 0.1.0 beta\r\n05.12.2025";
             // 
             // lbl_Info
             // 
             this.lbl_Info.AutoSize = true;
             this.lbl_Info.Font = new System.Drawing.Font("Microsoft PhagsPa", 16.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbl_Info.ForeColor = System.Drawing.SystemColors.ButtonFace;
-            this.lbl_Info.Location = new System.Drawing.Point(3, 318);
+            this.lbl_Info.Location = new System.Drawing.Point(13, 277);
             this.lbl_Info.Name = "lbl_Info";
             this.lbl_Info.Size = new System.Drawing.Size(71, 37);
             this.lbl_Info.TabIndex = 45;
@@ -1215,18 +1251,6 @@
             this.lbl_modeDisplay.Size = new System.Drawing.Size(149, 37);
             this.lbl_modeDisplay.TabIndex = 52;
             this.lbl_modeDisplay.Text = "Calculator";
-            // 
-            // linkLabel_github
-            // 
-            this.linkLabel_github.ActiveLinkColor = System.Drawing.SystemColors.Highlight;
-            this.linkLabel_github.AutoSize = true;
-            this.linkLabel_github.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
-            this.linkLabel_github.Location = new System.Drawing.Point(7, 451);
-            this.linkLabel_github.Name = "linkLabel_github";
-            this.linkLabel_github.Size = new System.Drawing.Size(295, 16);
-            this.linkLabel_github.TabIndex = 53;
-            this.linkLabel_github.TabStop = true;
-            this.linkLabel_github.Text = "https://github.com/yarn1x/Engineering_calculator";
             // 
             // F_MainWindow
             // 
@@ -1259,6 +1283,7 @@
             this.Panel_SE.PerformLayout();
             this.Panel_settings.ResumeLayout(false);
             this.Panel_settings.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1344,8 +1369,9 @@
         #endregion
 
         private System.Windows.Forms.Label lbl_modeDisplay;
+        private System.Windows.Forms.Button Btn_GitHubSource;
+        private System.Windows.Forms.PictureBox pictureBox1;
         private Guna.UI2.WinForms.Guna2ComboBox Cb_settings_language;
-        private System.Windows.Forms.LinkLabel linkLabel_github;
     }
 }
 

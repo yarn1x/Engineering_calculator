@@ -121,19 +121,22 @@
   <data name="calculator_ico" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\calculator_ico.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="settings_ico_black" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\settings_ico_black.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="SEmode_ico_black" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\SEmode_ico_black.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="settings_ico" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\settings_ico.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="calculator_ico_black" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\calculator_ico_black.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="SEmode_ico" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\SEmode_ico.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="settings_ico_black" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\settings_ico_black.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="calculator_ico_black" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\calculator_ico_black.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="GitHub_logo" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\GitHub_logo.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

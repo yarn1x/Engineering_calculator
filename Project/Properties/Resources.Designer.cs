@@ -83,6 +83,16 @@ namespace equation_calculator.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap GitHub_logo {
+            get {
+                object obj = ResourceManager.GetObject("GitHub_logo", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap SEmode_ico {
             get {
                 object obj = ResourceManager.GetObject("SEmode_ico", resourceCulture);
